@@ -8,7 +8,7 @@
 
       <div class="row">
       	<div class="col-10">
-      		<h2>Product List</h2>
+      		<h2>Prints List</h2>
       	</div>
       	<div class="col-2">
       		<a href="#" data-toggle="modal" data-target="#add_product_modal" class="btn btn-primary btn-sm">Add Product</a>

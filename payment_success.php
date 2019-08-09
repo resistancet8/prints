@@ -5,18 +5,14 @@ if(!isset($_SESSION["uid"])){
 	header("location:index.php");
 }
 
-if (isset($_GET["st"])) {
-
 	# code...
-	$trx_id = $_GET["tx"];
-		$p_st = $_GET["st"];
-		$amt = $_GET["amt"];
-		$cc = $_GET["cc"];
-		$cm_user_id = $_GET["cm"];
-		$c_amt = $_COOKIE["ta"];
-	if ($p_st == "Completed") {
+	$hash = bin2hex(random_bytes(5));
 
-		
+	$trx_id = $hash;
+		$p_st = 'success';
+		$amt = $_SESSION["total_amt"];
+		$cm_user_id = $_SESSION["uid"];
+	if ($p_st == "success") {
 
 		include_once("db.php");
 		$sql = "SELECT p_id,qty FROM cart WHERE user_id = '$cm_user_id'";
@@ -72,7 +68,7 @@ if (isset($_GET["st"])) {
 									<div class="panel panel-default">
 										<div class="panel-heading"></div>
 										<div class="panel-body">
-											<h1>Thankyou </h1>
+											<h1>Thankyou</h1>
 											<hr/>
 											<p>Hello <?php echo "<b>".$_SESSION["name"]."</b>"; ?>,Your payment process is 
 											successfully completed and your Transaction id is <b><?php echo $trx_id; ?></b><br/>
@@ -94,7 +90,6 @@ if (isset($_GET["st"])) {
 			header("location:index.php");
 		}
 		
-	}
 }
 
 

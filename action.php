@@ -220,6 +220,8 @@ if (isset($_POST["Common"])) {
 	}
 	if (isset($_POST["checkOutDetails"])) {
 		if (mysqli_num_rows($query) > 0) {
+			$_SESSION['total_qty'] = 0;
+			$_SESSION['total_amt'] = 0;
 			//display user cart item with "Ready to checkout" button if user is not login
 			echo "<form method='post' action='login_form.php'>";
 				$n=0;
@@ -231,7 +233,8 @@ if (isset($_POST["Common"])) {
 					$product_image = $row["product_image"];
 					$cart_item_id = $row["id"];
 					$qty = $row["qty"];
-
+					$_SESSION['total_qty'] += $qty;
+					$_SESSION['total_amt'] += $row["product_price"];
 					echo 
 						'<div class="row">
 								<div class="col-md-2">
@@ -281,14 +284,7 @@ if (isset($_POST["Common"])) {
 								}
 							  
 							echo   
-								'<input type="hidden" name="return" value="http://localhost/project1/payment_success.php"/>
-					                <input type="hidden" name="notify_url" value="http://localhost/print/payment_success.php">
-									<input type="hidden" name="cancel_return" value="http://localhost/print/cancel.php"/>
-									<input type="hidden" name="currency_code" value="USD"/>
-									<input type="hidden" name="custom" value="'.$_SESSION["uid"].'"/>
-									<input style="float:right;margin-right:80px;" type="image" name="submit"
-										src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-rect-paypalcheckout-60px.png" alt="PayPal Checkout"
-										alt="PayPal - The safer, easier way to pay online">
+								'<a class="btn btn-primary" href="payment_success.php" style="float:right;margin-right:80px;" name="submit" alt="Checkout"> Checkout </a>
 								</form>';
 				}
 			}
